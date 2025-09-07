@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio • Roopesh</title>
+  <meta name="description" content="Aesthetic portfolio in gold, black and white with smooth animations." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0c;          /* rich black */
+      --panel:#121214;       /* softer black */
+      --ink:#f8f8f8;         /* nearly white */
+      --muted:#b8b8bb;       /* cool gray */
+      --gold:#f5c518;        /* golden yellow (IMDb gold) */
+      --gold-soft:#ffe58a;   /* light gold */
+      --gold-deep:#b69100;   /* deeper gold */
+      --ring: 0 0 0 2px rgba(245,197,24,.35);
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --grad: radial-gradient(1200px 800px at 10% -10%, rgba(245,197,24,.06), transparent 40%),
+              radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.05), transparent 40%);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      line-height:1.6; letter-spacing:.2px; accent-color:var(--gold);
+      background-image:var(--grad);
+    }
+
+    /* Smooth scroll */
+    html{scroll-behavior:smooth}
+
+    /* Utilities */
+    .container{width:min(1120px, 92%); margin-inline:auto}
+    .grid{display:grid; gap:28px}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.1rem; border-radius:999px; border:1px solid #2a2a2e; background:linear-gradient(180deg,#161618,#111); color:var(--ink); text-decoration:none; font-weight:600; box-shadow:var(--shadow); position:relative; overflow:hidden}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn--gold{border-color:rgba(245,197,24,.4); background:linear-gradient(180deg,#1a1a0f,#141207); box-shadow:0 8px 20px rgba(245,197,24,.18)}
+    .btn--gold .shine{position:absolute; inset:0; background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.4) 20%, transparent 40%); transform:translateX(-120%);}
+    .btn--gold:hover .shine{animation:shine 900ms}
+    @keyframes shine{to{transform:translateX(120%)}}
+
+    /* Subtle glow underline */
+    .link{color:var(--ink); text-decoration:none; position:relative}
+    .link::after{content:""; position:absolute; left:0; right:100%; bottom:-3px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); transition:right .35s ease}
+    .link:hover::after{right:0}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(11,11,12,.85), rgba(11,11,12,.35) 55%, rgba(11,11,12,0)); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:.8rem}
+    .brand__logo{width:36px; height:36px; border-radius:12px; background:conic-gradient(from 140deg, var(--gold), var(--gold-soft), var(--gold), var(--gold-deep)); box-shadow:0 0 0 2px rgba(245,197,24,.2), 0 12px 30px rgba(245,197,24,.18)}
+    .brand__name{font-weight:800; letter-spacing:.6px}
+    .nav a{color:var(--muted); text-decoration:none; margin-left:22px; font-weight:600}
+    .nav a:hover{color:var(--ink)}
+
+    /* Hero */
+    .hero{position:relative; padding:92px 0 72px; overflow:hidden}
+    .hero__wrap{display:grid; grid-template-columns: 1.1fr .9fr; gap:56px; align-items:center}
+    .eyebrow{display:inline-flex; align-items:center; gap:.5rem; padding:.3rem .6rem; border:1px solid rgba(245,197,24,.35); border-radius:999px; color:var(--gold-soft); background:rgba(245,197,24,.08)}
+    h1{font-family:"Playfair Display", serif; font-weight:700; line-height:1.05; margin:16px 0 16px; font-size:clamp(2.2rem, 3.6vw + 1rem, 4.2rem)}
+    .sub{color:var(--muted); font-size:1.05rem}
+    .cta{display:flex; gap:14px; margin-top:26px; flex-wrap:wrap}
+
+    /* Floating gold ring */
+    .orb{position:absolute; width:420px; height:420px; right:-120px; top:-80px; border-radius:50%;
+      background:radial-gradient(circle at 50% 50%, rgba(245,197,24,.35), rgba(245,197,24,.06) 45%, rgba(245,197,24,0) 60%);
+      filter:blur(12px); animation:float 9s ease-in-out infinite; pointer-events:none}
+    @keyframes float{50%{transform:translateY(18px) rotate(6deg)} 100%{transform:translateY(0) rotate(0)}}
+
+    /* Glass card */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .hero__card{padding:22px; display:grid; grid-template-columns:72px 1fr; gap:16px; align-items:center}
+    .avatar{width:72px; height:72px; border-radius:50%; background:linear-gradient(180deg,#222,#111); border:1px solid rgba(255,255,255,.08); position:relative}
+    .avatar::after{content:""; position:absolute; inset:0; border-radius:50%; box-shadow:inset 0 0 40px rgba(245,197,24,.18)}
+
+    /* Sections */
+    section{padding:72px 0}
+    .section__title{font-size:1.6rem; font-weight:800; letter-spacing:.4px}
+    .section__intro{color:var(--muted); margin-top:6px}
+
+    /* Skills */
+    .skills{grid-template-columns:repeat(auto-fit, minmax(220px,1fr))}
+    .chip{display:inline-flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg,#121214,#0e0e10)}
+    .dot{width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px rgba(245,197,24,.18)}
+
+    /* Project cards */
+    .projects{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .project{position:relative; overflow:hidden}
+    .project__media{aspect-ratio:16/10; border-radius:calc(var(--radius) - 2px); background:linear-gradient(180deg,#1b1b1e,#0f0f11); border:1px solid rgba(255,255,255,.08); display:grid; place-items:center; font-weight:800; color:#fff; letter-spacing:1px}
+    .project__tag{position:absolute; top:12px; left:12px; font-size:.8rem; background:rgba(245,197,24,.15); color:var(--gold-soft); padding:.28rem .6rem; border-radius:999px; border:1px solid rgba(245,197,24,.35)}
+    .project__body{padding:16px 4px}
+    .project h3{margin:.2rem 0}
+    .project p{color:var(--muted); margin:.2rem 0 0}
+    .project:hover .project__media{transform:translateY(-3px); transition:transform .35s ease}
+
+    /* Experience timeline */
+    .timeline{position:relative; margin-top:10px}
+    .timeline::before{content:""; position:absolute; top:0; bottom:0; left:10px; width:2px; background:linear-gradient(var(--gold), transparent)}
+    .timeline__item{position:relative; padding-left:36px; margin:22px 0}
+    .timeline__item::before{content:""; position:absolute; left:3px; top:.35rem; width:14px; height:14px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px rgba(245,197,24,.22)}
+    .timeline__meta{color:var(--gold-soft); font-weight:700}
+
+    /* Contact */
+    form{display:grid; gap:14px; margin-top:18px}
+    input, textarea{width:100%; padding:14px 14px; border-radius:14px; background:#0f0f12; border:1px solid rgba(255,255,255,.1); color:var(--ink)}
+    input:focus, textarea:focus{outline:none; box-shadow:var(--ring)}
+    textarea{min-height:140px; resize:vertical}
+
+    /* Footer */
+    footer{padding:28px 0 60px; color:var(--muted); border-top:1px solid rgba(255,255,255,.06)}
+
+    /* Reveal animations */
+    .reveal{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.is-visible{opacity:1; transform:none}
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .orb{animation:none}
+      .btn--gold .shine{animation:none}
+      .reveal{opacity:1; transform:none}
+    }
+
+    /* Responsive hero */
+    @media (max-width: 920px){
+      .hero__wrap{grid-template-columns:1fr}
+      .orb{right:-160px; top:-120px; opacity:.5}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand__logo" aria-hidden="true"></div>
+        <div class="brand__name">ROOPESH S</div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="orb" aria-hidden="true"></div>
+      <div class="hero__wrap">
+        <div>
+          <span class="eyebrow">✨ Crafting elegant web experiences</span>
+          <h1>
+            Hi, I'm <span style="color:var(--gold)">Roopesh S</span> —
+            <br />Full‑Stack Developer
+          </h1>
+          <p class="sub">I build fast, accessible and delightful apps using <strong>Java</strong>, <strong>Spring Boot</strong>, <strong>React</strong>, <strong>MySQL</strong> and more.
+            Currently exploring <strong>ML for Forex prediction</strong>.</p>
+          <div class="cta">
+            <a class="btn btn--gold" href="#projects">
+              <span class="shine" aria-hidden="true"></span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              View Projects
+            </a>
+            <a class="btn" href="#contact">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16v16H4z M4 4l8 8 8-8"/></svg>
+              Contact Me
+            </a>
+            <a class="link" href="#resume">Download Résumé →</a>
+          </div>
+        </div>
+        <div class="card hero__card">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <div style="font-weight:800">Available for opportunities</div>
+            <div style="color:var(--muted)">Based in India • Open to remote • Response within 24h</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="grid" style="grid-template-columns: 1.1fr .9fr; align-items:start">
+          <div>
+            <div class="section__title">About</div>
+            <p class="section__intro">Developer with a knack for polished UI and solid backend foundations. I enjoy turning complex problems into simple, beautiful interfaces.</p>
+            <p class="reveal">I recently completed a <strong>Java Full‑Stack</strong> program and built a <strong>Forex market prediction</strong> project leveraging ML. My toolset spans <em>Java, Spring Boot, Hibernate, MySQL/Oracle, React, Node, MongoDB</em>.</p>
+            <p class="reveal">When I’m not coding, I keep up with trading & finance, or sketch interface ideas.</p>
+          </div>
+          <div class="card reveal" style="padding:22px">
+            <ul style="list-style:none; padding:0; margin:0; display:grid; gap:10px">
+              <li>📍 <strong>Location:</strong> India (IST)</li>
+              <li>🎯 <strong>Focus:</strong> Full‑stack apps • FinTech • ML</li>
+              <li>🛠️ <strong>Stack:</strong> Java, Spring, React, SQL, MongoDB</li>
+              <li>📫 <strong>Email:</strong> roopeshs2003@gmail.com</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section__title">Skills</div>
+        <p class="section__intro">A compact snapshot of tools I use daily.</p>
+        <div class="grid skills" style="margin-top:18px">
+          <div class="card" style="padding:16px 18px">
+            <div class="chip"><span class="dot"></span> Java • Spring Boot</div>
+          </div>
+          <div class="card" style="padding:16px 18px">
+            <div class="chip"><span class="dot"></span> React • HTML • CSS</div>
+          </div>
+          <div class="card" style="padding:16px 18px">
+            <div class="chip"><span class="dot"></span> MySQL • Oracle • MongoDB</div>
+          </div>
+          <div class="card" style="padding:16px 18px">
+            <div class="chip"><span class="dot"></span> Hibernate • Maven</div>
+          </div>
+          <div class="card" style="padding:16px 18px">
+            <div class="chip"><span class="dot"></span> Python • scikit‑learn (ML)</div>
+          </div>
+          <div class="card" style="padding:16px 18px">
+            <div class="chip"><span class="dot"></span> Git • GitHub • CI/CD</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section__title">Featured Projects</div>
+        
+        <div class="grid projects" style="margin-top:18px">
+          <!-- Project 1 -->
+          <article class="project card reveal">
+            <span class="project__tag">Java • React • MySQL</span>
+            <a class="project__media" href="#" aria-label="Open Forex ML project">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+                <path d="M3 17l6-6 4 4 7-7" stroke="white"/>
+                <path d="M3 21h18" stroke="white"/>
+              </svg>
+            </a>
+            <div class="project__body">
+              <h3>Forex Market Prediction</h3>
+              <p>Machine learning powered forecasts with interactive charts and backtesting.</p>
+            </div>
+          </article>
+          <!-- Project 2 -->
+          <article class="project card reveal">
+            <span class="project__tag">Spring Boot • REST</span>
+            <a class="project__media" href="#" aria-label="Open Task API project">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="14" rx="3" stroke="white"/>
+                <path d="M7 8h7M7 12h10M7 16h5" stroke="white"/>
+              </svg>
+            </a>
+            <div class="project__body">
+              <h3>Task Manager API</h3>
+              <p>Clean RESTful backend with JWT auth, pagination and test coverage.</p>
+            </div>
+          </article>
+          <!-- Project 3 -->
+         <article class="project card reveal">
+          <span class="project__tag">React • Spring Boot • MySQL</span>
+          <a class="project__media" href="#" aria-label="Open Trading Journal project">
+            <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+           <!-- Chart-like icon -->
+             <path d="M3 17h3v4H3zM9 11h3v10H9zM15 7h3v14h-3z" stroke="white" fill="white"/>
+             <path d="M2 21h20" stroke="white"/>
+           </svg>
+        </a>
+        <div class="project__body">
+         <h3>Trading Strategy & Journal</h3>
+         <p>A real-time application for traders to record strategies, track performance, and analyze results. 
+          Features include journaling, backtesting, and live analytics for better decision-making.</p>
+        </div>
+</article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section__title">Experience</div>
+        <p class="section__intro">What I’ve worked on so far.</p>
+        <div class="timeline">
+          <div class="timeline__item reveal">
+            <div class="timeline__meta">2024 — 2025 • Full‑Stack Intern • KodNest</div>
+            <div>Built modules in Java + Spring, integrated REST APIs, and delivered responsive React UIs.</div>
+          </div>
+          <div class="timeline__item reveal">
+            <div class="timeline__meta">2023 — 2024 • Academic Project</div>
+            <div>Designed and implemented Forex ML prototype with data pipelines and model evaluation.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="grid" style="grid-template-columns: 1fr .9fr; align-items:start">
+          <div>
+            <div class="section__title">Let's build something</div>
+            <p class="section__intro">Have a role, idea, or freelance project? I’d love to hear from you.</p>
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSc84zVSgW1HwqzIZMD3UpxR310hB6s2DGiQ9MqvBZ7Xafuarw/formResponse" method="post" target="_blank">
+              <input name="entry.421860702" placeholder="Your name" required />
+              <input name="entry.700133259" type="email" placeholder="Email" required />
+              <textarea name="entry.2061053888" placeholder="Tell me about your project…" required></textarea>
+              <button class="btn btn--gold" type="submit"><span class="shine" aria-hidden="true"></span> Send Message</button>
+            </form>
+          </div>
+          <div class="card" style="padding:18px 18px">
+            <div style="font-weight:800">Also reachable</div>
+            <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:10px">
+              <li>📧 <a class="link" href="mailto:roopeshs2003@gmail.com">roopeshs2003@gmail.com</a></li>
+              <li>🌎 <a class="link" href="https://github.com/Roopesh003" target="_blank">GitHub</a></li>
+              <li>🤝 <a class="link" href="https://www.linkedin.com/in/roopesh-s-ba0948258/" target="_blank">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <div class="container card" style="padding:22px">
+        <div class="grid" style="grid-template-columns: 1fr auto; align-items:center">
+          <div>
+            <div class="section__title">Resume</div>
+            <p class="section__intro">Grab a PDF copy tailored for ATS and recruiters.</p>
+          </div>
+          <a class="btn btn--gold" href="/Resume/Roopesh.pdf" target="_blank" download>
+            <span class="shine" aria-hidden="true"></span>
+            Download PDF
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap">
+      <div>© <span id="y"></span> Roopesh S. All Rights Reserved.</div>
+      <div style="display:flex; gap:10px">
+        <a class="link" href="https://github.com/Roopesh003">GitHub</a>
+        <a class="link" href="https://www.linkedin.com/in/roopesh-s-ba0948258/">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // IntersectionObserver-based reveal
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+      entries.forEach((e)=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target);} });
+    }, {threshold:.16}) : null;
+    document.querySelectorAll('.reveal').forEach(el=> io ? io.observe(el) : el.classList.add('is-visible'));
+  </script>
+</body>
+</html>
